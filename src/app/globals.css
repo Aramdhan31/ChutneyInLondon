@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+:root {
+  --color-body: #350104;
+  --color-surface: rgba(78, 4, 13, 0.9);
+  --color-foreground: #fdf6f0;
+  --color-muted: rgba(255, 221, 178, 0.7);
+  --color-primary: #d80f24;
+  --color-primary-dark: #850012;
+  --color-gold: #f3c144;
+  --color-gold-soft: #f6d47a;
+  --color-cream: #fff4e5;
+}
+
+@theme inline {
+  --color-body: var(--color-body);
+  --color-surface: var(--color-surface);
+  --color-foreground: var(--color-foreground);
+  --color-muted: var(--color-muted);
+  --color-primary: var(--color-primary);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-gold: var(--color-gold);
+  --color-gold-soft: var(--color-gold-soft);
+  --color-cream: var(--color-cream);
+  --font-body: var(--font-body);
+  --font-heading: var(--font-heading);
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-body);
+}
+
+body {
+  background: var(--color-body);
+  color: var(--color-foreground);
+  font-family: var(--font-body), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.75rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #321108;
+  background: linear-gradient(135deg, #fff4db 0%, #f9d969 35%, #f3c144 70%, #e0a02b 100%);
+  box-shadow: 0 14px 32px rgba(243, 193, 68, 0.35);
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-gold:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+  box-shadow: 0 16px 34px rgba(243, 193, 68, 0.45);
+}
+
+.btn-gold-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.75rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #f3c144;
+  border: 1px solid rgba(243, 193, 68, 0.65);
+  background: rgba(243, 193, 68, 0.12);
+  box-shadow: 0 12px 26px rgba(243, 193, 68, 0.25);
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-gold-outline:hover {
+  transform: translateY(-1px);
+  background: rgba(243, 193, 68, 0.2);
+  color: #fff4db;
+  box-shadow: 0 14px 30px rgba(243, 193, 68, 0.35);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading), "Poppins", sans-serif;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.text-muted {
+  color: var(--color-muted);
+}
+
+.bg-body {
+  background-color: var(--color-body);
+}
+
+.bg-charcoal {
+  background: rgba(11, 11, 11, 0.9);
+}
+
+.bg-surface {
+  background: var(--color-surface);
+}
+
+.text-foreground {
+  color: var(--color-foreground);
+}
+
+.text-accent {
+  color: var(--color-gold);
+}
+
+.text-gold {
+  color: var(--color-gold);
+}
+
+.bg-gold {
+  background-color: var(--color-gold);
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
