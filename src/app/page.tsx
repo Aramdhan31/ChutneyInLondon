@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -16,11 +16,31 @@ import { SocialCard } from "@/components/social-card";
 import { SectionHeading } from "@/components/section-heading";
 
 export default function Home() {
-  const [showPopup, setShowPopup] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    if (isMobile) {
+      const hasSeen = localStorage.getItem("cil_popup_seen");
+      if (!hasSeen) {
+        setShowPopup(true);
+      }
+    } else {
+      setShowPopup(true);
+    }
+  }, []);
+
+  const handleClosePopup = () => {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    if (isMobile) {
+      localStorage.setItem("cil_popup_seen", "true");
+    }
+    setShowPopup(false);
+  };
 
   return (
     <div className="space-y-24 pb-24">
-      <EventPopup open={showPopup} onClose={() => setShowPopup(false)} />
+      <EventPopup open={showPopup} onClose={handleClosePopup} />
       <section className="relative overflow-hidden pb-10 pt-24 sm:pt-32">
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#65030f 0%,rgba(53,1,4,0.9) 65%)]" />
