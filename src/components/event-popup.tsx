@@ -33,7 +33,7 @@ export function EventPopup({ open, onClose, className }: EventPopupProps) {
   if (!open || !event) return null;
 
   return (
-    <div className="fixed inset-0 z-[999] flex items-center justify-center px-3 py-6 sm:px-4 sm:py-10">
+    <div className="fixed inset-0 z-[999] flex items-center justify-center px-3 py-4 sm:px-4 sm:py-10">
       <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" onClick={onClose} />
       <div
         className={cn(
@@ -50,7 +50,7 @@ export function EventPopup({ open, onClose, className }: EventPopupProps) {
           <X className="h-5 w-5" />
         </button>
 
-        <div className="flex flex-col gap-6 lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:overflow-hidden">
+        <div className="flex max-h-[90vh] flex-col gap-6 overflow-y-auto lg:grid lg:max-h-[80vh] lg:grid-cols-[1.05fr_0.95fr] lg:overflow-hidden">
           {/* Mobile banner image */}
           <div className="relative h-[220px] overflow-hidden rounded-[1.4rem] border border-white/10 bg-[rgba(53,1,4,0.75)] lg:hidden">
             <Image
