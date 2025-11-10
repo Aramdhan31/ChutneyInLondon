@@ -87,9 +87,18 @@ body {
 
 .btn-gold-outline:hover {
   transform: translateY(-1px);
-  background: rgba(243, 193, 68, 0.2);
+  background: rgba(243, 193, 68, 0.18);
   color: #fff4db;
   box-shadow: 0 14px 30px rgba(243, 193, 68, 0.35);
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
 }
 
 h1,

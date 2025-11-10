@@ -124,13 +124,21 @@ export default function Home() {
             title="Meet the Chutney in London selectors"
             description="The residents and hosts shaping every BYOB takeover—from tassa-driven anthems to late-night riddims."
           />
-          <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 sm:pb-4 lg:grid lg:grid-cols-3 lg:gap-4">
-            {siteConfig.residentDJs.map((dj) => (
-              <div key={dj.id} className="snap-center lg:snap-none">
-                <DJCard dj={dj} variant="compact" />
-              </div>
-            ))}
-          </div>
+          {!siteConfig.residentDJs.length ? (
+            <p className="text-sm text-muted">DJ lineup coming soon.</p>
+          ) : (
+            <div className="relative overflow-hidden">
+              <motion.div
+                className="flex gap-4 pb-2 sm:pb-4"
+                animate={{ x: ["0%", "-50%"] }}
+                transition={{ duration: 30, ease: "linear", repeat: Infinity }}
+              >
+                {[...siteConfig.residentDJs, ...siteConfig.residentDJs].map((dj, index) => (
+                  <DJCard key={`${dj.id}-${index}`} dj={dj} variant="compact" />
+                ))}
+              </motion.div>
+            </div>
+          )}
         </div>
       </section>
 
