@@ -479,18 +479,22 @@ export const siteConfig = {
     {
       id: "dj-cj",
       name: "DJ CJ",
+      image: "/DJ%20CJ.jpg",
     },
     {
       id: "selecta-a",
       name: "Selecta A",
+      image: "/djSelectaa.jpg",
     },
     {
       id: "majikal",
       name: "Majikal",
+      image: "/Majikal.PNG",
     },
     {
       id: "katash",
       name: "Katash",
+      image: "/Katash.PNG",
     },
   ] satisfies DJProfile[],
 };

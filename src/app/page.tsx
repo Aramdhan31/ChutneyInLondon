@@ -124,10 +124,16 @@ export default function Home() {
             title="Meet the Chutney in London selectors"
             description="The residents and hosts shaping every BYOB takeover—from tassa-driven anthems to late-night riddims."
           />
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {siteConfig.residentDJs.map((dj) => (
-              <DJCard key={dj.id} dj={dj} />
-            ))}
+          <div className="relative overflow-hidden">
+            <motion.div
+              className="flex gap-4 pb-4"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ duration: 30, ease: "linear", repeat: Infinity }}
+            >
+              {[...siteConfig.residentDJs, ...siteConfig.residentDJs].map((dj, index) => (
+                <DJCard key={`${dj.id}-${index}`} dj={dj} variant="compact" />
+              ))}
+            </motion.div>
           </div>
         </div>
       </section>
