@@ -37,6 +37,15 @@ body {
   font-family: var(--font-body), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+.btn-gold,
+.btn-gold-outline {
+  min-height: 3rem;
+  min-width: 10rem;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+}
+
 .btn-gold {
   display: inline-flex;
   align-items: center;

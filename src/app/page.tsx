@@ -41,7 +41,7 @@ export default function Home() {
         </div>
         <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 sm:px-6 lg:flex-row lg:items-center">
           <motion.div
-            className="max-w-2xl space-y-6 text-white"
+            className="max-w-2xl space-y-6 text-center text-white sm:text-left"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -61,7 +61,7 @@ export default function Home() {
             <p className="text-base leading-relaxed text-muted md:text-lg">
               UK’s No1 IndoCaribbean Party Experience. Specialists in Chutney, Soca, Bollywood, Dancehall plus global fusion — culture and events that feel like home.
             </p>
-            <div className="flex flex-col gap-4 sm:flex-row">
+            <div className="flex flex-col gap-4 sm:flex-row sm:justify-start">
               <Link
                 href="/events"
                 className="btn-gold px-7"

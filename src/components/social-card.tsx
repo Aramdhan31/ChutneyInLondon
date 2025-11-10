@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { type LucideIcon, Instagram, Music4, Radio, Ticket } from "lucide-react";
+import { type LucideIcon, ArrowUpRight, Instagram, Music4, Radio, Ticket } from "lucide-react";
 
 import type { SocialSpotlight } from "@/config/site";
 import { cn } from "@/lib/utils";
@@ -40,9 +40,9 @@ export function SocialCard({ spotlight, className }: SocialCardProps) {
           href={spotlight.href}
           target="_blank"
           rel="noreferrer"
-          className="btn-gold-outline px-4 py-2 text-xs uppercase tracking-[0.3em]"
+          className="btn-gold-outline px-5 py-2 text-xs uppercase tracking-[0.32em]"
         >
-          Visit
+          Visit <ArrowUpRight className="h-3.5 w-3.5" />
         </Link>
       </div>
       <p className="mt-4 text-sm leading-relaxed text-muted">{spotlight.description}</p>

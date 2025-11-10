@@ -37,7 +37,7 @@ export function EventPopup({ open, onClose, className }: EventPopupProps) {
       <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" onClick={onClose} />
       <div
         className={cn(
-          "relative z-10 w-full max-w-4xl overflow-hidden rounded-[2.5rem] border border-white/15 bg-[rgba(26,0,3,0.92)] shadow-[0_40px_120px_rgba(0,0,0,0.55)]",
+          "relative z-10 w-full max-w-5xl overflow-hidden rounded-[2rem] border border-white/15 bg-[rgba(26,0,3,0.92)] shadow-[0_40px_120px_rgba(0,0,0,0.55)]",
           className
         )}
       >
@@ -49,9 +49,9 @@ export function EventPopup({ open, onClose, className }: EventPopupProps) {
         >
           <X className="h-5 w-5" />
         </button>
-        <div className="grid gap-0 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="relative">
-            <div className="relative h-full w-full">
+        <div className="grid gap-0 md:grid-cols-[1.05fr_0.95fr]">
+          <div className="relative hidden md:block">
+            <div className="relative h-full w-full min-h-[520px]">
               <Image
                 src={event.image}
                 alt={event.title}
@@ -78,7 +78,7 @@ export function EventPopup({ open, onClose, className }: EventPopupProps) {
             </div>
           </div>
 
-          <div className="flex flex-col gap-6 p-8">
+          <div className="flex flex-col gap-6 p-6 md:p-8">
             <div className="rounded-[1.6rem] border border-white/15 bg-[rgba(53,1,4,0.75)] p-6">
               <div className="space-y-3 text-sm text-muted">
                 {event.description.map((paragraph) => (
@@ -137,14 +137,14 @@ export function EventPopup({ open, onClose, className }: EventPopupProps) {
             </div>
 
             <div className="mt-auto flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div className="text-xs uppercase tracking-[0.35em] text-white/70">
+              <div className="text-xs uppercase tracking-[0.3em] text-white/70 text-center sm:text-left">
                 Hosted by DJ Stylz UK • Chutney in London
               </div>
               <Link
                 href={event.ticketLink}
                 target="_blank"
                 rel="noreferrer"
-                className="btn-gold"
+                className="btn-gold w-full sm:w-auto sm:min-w-[11rem]"
               >
                 <Ticket className="h-4 w-4" />
                 {event.ticketLabel ?? "Buy Tickets"}
