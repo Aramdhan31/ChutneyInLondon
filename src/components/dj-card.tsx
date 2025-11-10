@@ -57,7 +57,8 @@ export function DJCard({ dj, variant = "default", href = "/about" }: DJCardProps
             alt={dj.name}
             fill
             sizes="(max-width:768px) 100vw, 320px"
-            className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
+            className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+            style={{ objectPosition: dj.imagePosition ?? "center top" }}
             priority={dj.id === "dj-stylz-uk"}
           />
         ) : (

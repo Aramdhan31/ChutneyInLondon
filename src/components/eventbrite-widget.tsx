@@ -12,7 +12,7 @@ export function EventbriteWidget({ widgetUrl, className }: EventbriteWidgetProps
         title="Eventbrite tickets"
         src={widgetUrl}
         loading="lazy"
-        className="h-[630px] w-full rounded-[1.8rem] border border-white/10 bg-white"
+        className="h-[480px] w-full rounded-[1.8rem] border border-white/10 bg-white sm:h-[560px] lg:h-[630px]"
         frameBorder="0"
       />
     </div>

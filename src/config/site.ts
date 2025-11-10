@@ -39,6 +39,7 @@ export type DJProfile = {
   role?: string;
   bio?: string;
   image?: string | null;
+  imagePosition?: string;
   socials?: {
     label: string;
     href: string;
@@ -466,6 +467,7 @@ export const siteConfig = {
       role: "Founder • Resident DJ",
       bio: "Chutney in London visionary blending chutney, soca, dancehall, and Bollywood for the UK and beyond.",
       image: "/StylzUK.jpg",
+      imagePosition: "center 20%",
       socials: [
         { label: "Instagram", href: "https://www.instagram.com/djstylzuk/" },
         { label: "Mixcloud", href: "https://www.mixcloud.com/djstylz18/" },
@@ -475,26 +477,31 @@ export const siteConfig = {
       id: "rikkie-d",
       name: "Rikkie D",
       image: "/Rikkie%20d.PNG",
+      imagePosition: "center 15%",
     },
     {
       id: "dj-cj",
       name: "DJ CJ",
       image: "/DJ%20CJ.jpg",
+      imagePosition: "center 20%",
     },
     {
       id: "selecta-a",
       name: "Selecta A",
       image: "/djSelectaa.jpg",
+      imagePosition: "center 25%",
     },
     {
       id: "majikal",
       name: "Majikal",
       image: "/Majikal.PNG",
+      imagePosition: "center 22%",
     },
     {
       id: "katash",
       name: "Katash",
       image: "/Katash.PNG",
+      imagePosition: "center 30%",
     },
   ] satisfies DJProfile[],
 };

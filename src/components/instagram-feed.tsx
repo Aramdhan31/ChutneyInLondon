@@ -12,7 +12,7 @@ export function InstagramFeed({ username, className }: InstagramFeedProps) {
         title={`${username} Instagram feed`}
         src={profileEmbedUrl}
         loading="lazy"
-        className="h-[640px] w-full rounded-[2rem] border border-white/10 bg-white"
+        className="h-[520px] w-full rounded-[2rem] border border-white/10 bg-white sm:h-[640px]"
         frameBorder="0"
         allowTransparency
       />

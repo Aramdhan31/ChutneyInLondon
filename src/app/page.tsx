@@ -47,7 +47,7 @@ export default function Home() {
   return (
     <div className="space-y-24 pb-24">
       <EventPopup open={showPopup} onClose={handleClosePopup} />
-      <section className="relative overflow-hidden pb-10 pt-24 sm:pt-32">
+      <section className="relative overflow-hidden pb-12 pt-20 sm:pb-10 sm:pt-32">
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#65030f 0%,rgba(53,1,4,0.9) 65%)]" />
           <div
@@ -124,16 +124,12 @@ export default function Home() {
             title="Meet the Chutney in London selectors"
             description="The residents and hosts shaping every BYOB takeover—from tassa-driven anthems to late-night riddims."
           />
-          <div className="relative overflow-hidden">
-            <motion.div
-              className="flex gap-4 pb-4"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ duration: 30, ease: "linear", repeat: Infinity }}
-            >
-              {[...siteConfig.residentDJs, ...siteConfig.residentDJs].map((dj, index) => (
-                <DJCard key={`${dj.id}-${index}`} dj={dj} variant="compact" />
-              ))}
-            </motion.div>
+          <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 sm:pb-4 lg:grid lg:grid-cols-3 lg:gap-4">
+            {siteConfig.residentDJs.map((dj) => (
+              <div key={dj.id} className="snap-center lg:snap-none">
+                <DJCard dj={dj} variant="compact" />
+              </div>
+            ))}
           </div>
         </div>
       </section>
