@@ -40,7 +40,7 @@ export function SocialCard({ spotlight, className }: SocialCardProps) {
           href={spotlight.href}
           target="_blank"
           rel="noreferrer"
-          className="btn-gold-outline px-5 py-2 text-xs uppercase tracking-[0.32em]"
+          className="btn-gold-outline w-full justify-center px-5 py-2 text-xs uppercase tracking-[0.32em] sm:w-auto"
         >
           Visit <ArrowUpRight className="h-3.5 w-3.5" />
         </Link>
@@ -51,7 +51,7 @@ export function SocialCard({ spotlight, className }: SocialCardProps) {
           <iframe
             src={spotlight.embedUrl}
             title={`${spotlight.title} embed`}
-            className="h-64 w-full"
+            className="h-[360px] w-full"
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
           />

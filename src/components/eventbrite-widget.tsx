@@ -14,7 +14,6 @@ export function EventbriteWidget({ widgetUrl, className }: EventbriteWidgetProps
         loading="lazy"
         className="h-[630px] w-full rounded-[1.8rem] border border-white/10 bg-white"
         frameBorder="0"
-        allowTransparency
       />
     </div>
   );

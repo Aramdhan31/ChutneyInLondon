@@ -33,6 +33,18 @@ export type MediaFeature = {
   };
 };
 
+export type DJProfile = {
+  id: string;
+  name: string;
+  role?: string;
+  bio?: string;
+  image?: string | null;
+  socials?: {
+    label: string;
+    href: string;
+  }[];
+};
+
 export type BlogPost = {
   slug: string;
   title: string;
@@ -133,6 +145,11 @@ export const siteConfig = {
       label: "SoundCloud",
       platform: "soundcloud",
       href: "https://soundcloud.com/chutneyinlondon",
+    },
+    {
+      label: "TikTok",
+      platform: "tiktok",
+      href: "https://www.tiktok.com/@chutneyinlondon",
     },
     {
       label: "Eventbrite",
@@ -377,13 +394,26 @@ export const siteConfig = {
       href: "https://www.instagram.com/chutneyinlondon/",
     },
     {
+      id: "soundcloud",
+      platform: "soundcloud",
+      title: "SoundCloud",
+      handle: "Chutney in London",
+      description:
+        "Live sets, exclusive dubs, and Indo-Caribbean blends recorded across the UK and Caribbean circuit.",
+      href: "https://soundcloud.com/chutneyinlondon",
+      embedUrl:
+        "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chutneyinlondon&color=%23f3c144&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
+    },
+    {
       id: "mixcloud",
       platform: "mixcloud",
       title: "Mixcloud",
       handle: "DJ Stylz UK",
       description:
-        "Legacy mixes and archived sets from earlier Chutney in London seasons. Follow Instagram for fresh drops.",
+        "Archived mixtapes and throwback sessions from DJ Stylz UK — perfect for warming up the crew before the night.",
       href: "https://www.mixcloud.com/djstylz18/",
+      embedUrl:
+        "https://www.mixcloud.com/widget/iframe/?hide_cover=1&light=1&feed=%2Fdjstylz18%2F",
     },
     {
       id: "eventbrite",
@@ -429,6 +459,40 @@ export const siteConfig = {
     widgetUrl:
       "https://www.eventbrite.co.uk/e/bring-ah-bottle-come-part-4-christmas-edition-tickets-1735955653089/widget?ref=etckt",
   } satisfies FeaturedEvent,
+  residentDJs: [
+    {
+      id: "dj-stylz-uk",
+      name: "DJ Stylz UK",
+      role: "Founder • Resident DJ",
+      bio: "Chutney in London visionary blending chutney, soca, dancehall, and Bollywood for the UK and beyond.",
+      image: "/StylzUK.jpg",
+      socials: [
+        { label: "Instagram", href: "https://www.instagram.com/djstylzuk/" },
+        { label: "Mixcloud", href: "https://www.mixcloud.com/djstylz18/" },
+      ],
+    },
+    {
+      id: "rikkie-d",
+      name: "Rikkie D",
+      image: "/Rikkie%20d.PNG",
+    },
+    {
+      id: "dj-cj",
+      name: "DJ CJ",
+    },
+    {
+      id: "selecta-a",
+      name: "Selecta A",
+    },
+    {
+      id: "majikal",
+      name: "Majikal",
+    },
+    {
+      id: "katash",
+      name: "Katash",
+    },
+  ] satisfies DJProfile[],
 };
 
 export type SiteConfig = typeof siteConfig;

@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { siteConfig } from "@/config/site";
 import { EventCard } from "@/components/event-card";
 import { FeaturedEventBanner } from "@/components/featured-event-banner";
@@ -41,24 +39,6 @@ export default function EventsPage() {
               <EventCard key={event.id} event={event} />
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="space-y-6 rounded-[2.5rem] border border-white/10 bg-[rgba(53,1,4,0.85)] p-8 shadow-[0_24px_60px_rgba(59,0,4,0.5)]">
-          <h3 className="text-lg font-semibold text-white">Event essentials</h3>
-          <ul className="grid gap-3 text-sm text-muted sm:grid-cols-3">
-            <li>Bring Your Own Bottle (BYOB) • Cups & ice provided</li>
-            <li>Food vendors on site with Indo-Caribbean favourites</li>
-            <li>Tables available on a first-come basis • No reservations</li>
-          </ul>
-          <p className="text-sm text-white/70">
-            Got questions? WhatsApp the team at{" "}
-            <Link href={`tel:${siteConfig.featuredEvent?.contact ?? ""}`} className="text-gold underline">
-              {siteConfig.featuredEvent?.contact ?? "+44 7508 600379"}
-            </Link>{" "}
-            for advance tickets and info.
-          </p>
         </div>
       </section>
 

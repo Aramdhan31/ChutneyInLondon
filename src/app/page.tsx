@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 import { siteConfig } from "@/config/site";
 import { BrandSeal } from "@/components/brand-seal";
-import { EventCard } from "@/components/event-card";
+import { DJCard } from "@/components/dj-card";
 import { EventPopup } from "@/components/event-popup";
 import { EventbriteWidget } from "@/components/eventbrite-widget";
 import { FeaturedEventBanner } from "@/components/featured-event-banner";
@@ -19,21 +19,27 @@ export default function Home() {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
-    const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    if (isMobile) {
-      const hasSeen = localStorage.getItem("cil_popup_seen");
-      if (!hasSeen) {
+    if (typeof window === "undefined") return;
+
+    const timer = window.setTimeout(() => {
+      const isMobile = window.matchMedia("(max-width: 767px)").matches;
+      const hasSeen = window.localStorage.getItem("cil_popup_seen");
+
+      if (isMobile) {
+        if (!hasSeen) {
+          setShowPopup(true);
+        }
+      } else {
         setShowPopup(true);
       }
-    } else {
-      setShowPopup(true);
-    }
+    }, 200);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   const handleClosePopup = () => {
-    const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    if (isMobile) {
-      localStorage.setItem("cil_popup_seen", "true");
+    if (typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches) {
+      window.localStorage.setItem("cil_popup_seen", "true");
     }
     setShowPopup(false);
   };
@@ -112,34 +118,16 @@ export default function Home() {
       ) : null}
 
       <section>
-        <div className="mx-auto max-w-6xl space-y-12 px-4 sm:px-6">
+        <div className="mx-auto max-w-6xl space-y-10 px-4 sm:px-6">
           <SectionHeading
-            eyebrow="Upcoming Events"
-            title="Secure your spot inside the next fete"
-            description="Experience premium Indo-Caribbean nightlife with curated lineups, live performers, and production that transforms every venue."
+            eyebrow="The Crew"
+            title="Meet the Chutney in London selectors"
+            description="The residents and hosts shaping every BYOB takeover—from tassa-driven anthems to late-night riddims."
           />
-          <div className="grid gap-6 lg:grid-cols-3">
-            {siteConfig.upcomingEvents.map((event) => (
-              <EventCard key={event.id} event={event} />
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {siteConfig.residentDJs.map((dj) => (
+              <DJCard key={dj.id} dj={dj} />
             ))}
-          </div>
-          <div className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-[rgba(53,1,4,0.85)] p-6 sm:flex-row sm:items-center sm:justify-between">
-            <div className="space-y-2">
-              <h3 className="text-xl font-semibold text-white">
-                Never miss a drop
-              </h3>
-              <p className="text-sm text-muted">
-                Follow our Eventbrite organiser to get instant alerts when new tickets go live.
-              </p>
-            </div>
-            <Link
-              href="https://www.eventbrite.co.uk/o/chutney-in-london-42463638213"
-              target="_blank"
-              rel="noreferrer"
-              className="btn-gold-outline"
-            >
-              Follow on Eventbrite
-            </Link>
           </div>
         </div>
       </section>
@@ -291,11 +279,7 @@ export default function Home() {
             </div>
             <Link
               href="/bookings"
-              className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-[var(--color-body)] transition hover:brightness-110"
-              style={{
-                backgroundImage: "linear-gradient(135deg,#f3c144,#fff4e5,#d80f24)",
-                boxShadow: "0 12px 30px rgba(216,15,36,0.4)",
-              }}
+              className="btn-gold"
             >
               View bookings info
             </Link>
