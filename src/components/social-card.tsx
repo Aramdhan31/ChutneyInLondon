@@ -22,7 +22,7 @@ export function SocialCard({ spotlight, className }: SocialCardProps) {
   return (
     <div
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-[2.2rem] border border-white/12 bg-[rgba(26,0,3,0.85)] p-6 shadow-[0_20px_45px_-18px_rgba(216,15,36,0.55)] transition hover:border-white/25",
+        "group relative flex h-full flex-col overflow-hidden rounded-[1.9rem] border border-white/12 bg-[rgba(26,0,3,0.85)] p-5 shadow-[0_20px_45px_-18px_rgba(216,15,36,0.55)] transition hover:border-white/25 sm:rounded-[2.2rem] sm:p-6",
         className
       )}
     >
@@ -40,24 +40,24 @@ export function SocialCard({ spotlight, className }: SocialCardProps) {
           href={spotlight.href}
           target="_blank"
           rel="noreferrer"
-          className="btn-gold-outline w-full justify-center px-5 py-2 text-xs uppercase tracking-[0.32em] sm:w-auto"
+          className="btn-gold-outline px-4 py-2 text-[11px] uppercase tracking-[0.28em]"
         >
           Visit <ArrowUpRight className="h-3.5 w-3.5" />
         </Link>
       </div>
       <p className="mt-4 text-sm leading-relaxed text-muted">{spotlight.description}</p>
       {spotlight.embedUrl ? (
-        <div className="mt-5 overflow-hidden rounded-[1.6rem] border border-white/12 bg-black/40">
+        <div className="mt-4 overflow-hidden rounded-[1.4rem] border border-white/12 bg-black/40 sm:mt-5">
           <iframe
             src={spotlight.embedUrl}
             title={`${spotlight.title} embed`}
-            className="h-[360px] w-full"
+            className="h-64 w-full"
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
           />
         </div>
       ) : (
-        <div className="mt-5 flex flex-col gap-2 rounded-[1.6rem] border border-white/10 bg-[rgba(53,1,4,0.6)] p-4 text-xs text-muted">
+        <div className="mt-4 flex flex-col gap-2 rounded-[1.4rem] border border-white/10 bg-[rgba(53,1,4,0.6)] p-4 text-[11px] text-muted sm:mt-5">
           <span className="font-semibold text-white">Stay tapped in:</span>
           <span>Tap visit to explore the latest posts and RSVP links directly.</span>
         </div>

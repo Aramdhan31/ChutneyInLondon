@@ -47,68 +47,50 @@ export default function Home() {
   return (
     <div className="space-y-24 pb-24">
       <EventPopup open={showPopup} onClose={handleClosePopup} />
-      <section className="relative overflow-hidden pb-12 pt-20 sm:pb-10 sm:pt-32">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#65030f 0%,rgba(53,1,4,0.9) 65%)]" />
-          <div
-            className="absolute left-1/2 top-16 h-[520px] w-[520px] -translate-x-1/2 opacity-70"
-            style={{
-              background: "conic-gradient(from 0deg, rgba(243,193,68,0.6), rgba(255,244,229,0.4), rgba(216,15,36,0.65), rgba(243,193,68,0.6))",
-              WebkitMaskImage: "radial-gradient(circle, rgba(0,0,0,0.85) 35%, rgba(0,0,0,0) 75%)",
-              maskImage: "radial-gradient(circle, rgba(0,0,0,0.85) 35%, rgba(0,0,0,0) 75%)",
-            }}
-          />
-          <div
-            className="absolute left-1/2 top-10 h-48 w-48 -translate-x-1/2 rounded-full opacity-70 blur-2xl"
-            style={{
-              background: "radial-gradient(circle,#f3c144 0%,rgba(255,244,229,0.35) 60%, transparent 100%)",
-            }}
-          />
-        </div>
-        <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 sm:px-6 lg:flex-row lg:items-center">
+      <section className="relative overflow-hidden rounded-b-[1.5rem] bg-[radial-gradient(circle_at_20%_20%,rgba(255,222,120,0.14),transparent_40%),radial-gradient(circle_at_80%_15%,rgba(255,68,68,0.1),transparent_45%),linear-gradient(180deg,rgba(53,1,4,0.95) 0%,rgba(53,1,4,0.78) 70%,rgba(53,1,4,0.88) 100%)] px-4 pb-10 pt-4 sm:px-6 sm:pb-16 sm:pt-14 lg:px-8 lg:pb-24 lg:pt-24">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-5 sm:grid sm:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] sm:items-center sm:gap-8">
           <motion.div
-            className="max-w-2xl space-y-6 text-center text-white sm:text-left"
-            initial={{ opacity: 0, y: 20 }}
+            className="order-1 w-full space-y-4 text-center text-white sm:order-none sm:text-left"
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
             <span
-              className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-[rgba(53,1,4,0.75)] px-4 py-1 text-xs uppercase tracking-[0.5em] text-gold"
-              style={{ boxShadow: "0 15px 35px rgba(243,193,68,0.25)" }}
+              className="mx-auto inline-flex items-center gap-2 rounded-full border border-white/15 bg-[rgba(53,1,4,0.65)] px-3 py-[4px] text-[8.6px] uppercase tracking-[0.32em] text-gold shadow-[0_10px_24px_rgba(243,193,68,0.25)] sm:mx-0 sm:text-[10px]"
             >
               DJ Stylz UK Presents
             </span>
             <h1
-              className="text-4xl font-semibold leading-snug md:text-5xl lg:text-6xl"
-              style={{ textShadow: "0 18px 35px rgba(216,15,36,0.4)" }}
+              className="text-[1.85rem] font-semibold leading-[1.05] sm:text-[2.6rem] sm:leading-tight md:text-[3.1rem] lg:text-[3.8rem]"
+              style={{ textShadow: "0 12px 30px rgba(216,15,36,0.45)" }}
             >
               {siteConfig.name}
             </h1>
-            <p className="text-base leading-relaxed text-muted md:text-lg">
+            <p className="text-[0.88rem] leading-relaxed text-muted sm:text-[1.05rem] md:text-lg">
               UK’s No1 IndoCaribbean Party Experience. Specialists in Chutney, Soca, Bollywood, Dancehall plus global fusion — culture and events that feel like home.
             </p>
-            <div className="flex flex-col gap-4 sm:flex-row sm:justify-start">
-              <Link
-                href="/events"
-                className="btn-gold px-7"
-              >
+            <div className="flex flex-col items-center gap-2 sm:flex-row sm:items-start sm:gap-3">
+              <Link href="/events" className="btn-gold w-full sm:w-auto sm:px-7">
                 See Upcoming Events
               </Link>
-              <Link
-                href="/music-media"
-                className="btn-gold-outline px-7 text-sm font-semibold"
-              >
+              <Link href="/music-media" className="btn-gold-outline w-full sm:w-auto sm:px-7 text-sm font-semibold">
                 Listen Now
               </Link>
             </div>
+            <div className="mt-5 hidden items-center gap-2 text-[11px] uppercase tracking-[0.42em] text-gold sm:flex">
+              <span className="h-[1px] w-8 bg-gold/60" aria-hidden />
+              Swipe below to explore the crew
+            </div>
           </motion.div>
           <motion.div
-            className="relative w-full max-w-lg"
+            className="order-2 flex w-full justify-center sm:order-none sm:justify-end"
             initial={{ opacity: 0, scale: 0.92, rotate: -4 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
           >
-            <BrandSeal flags={siteConfig.accentFlags} />
+            <div className="w-full max-w-[130px] sm:max-w-[220px] lg:max-w-[340px]">
+              <BrandSeal flags={siteConfig.accentFlags} />
+            </div>
           </motion.div>
         </div>
       </section>
