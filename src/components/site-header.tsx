@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,6 +17,32 @@ export function SiteHeader() {
 
   const toggle = () => setOpen((prev) => !prev);
   const close = () => setOpen(false);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const { body } = document;
+    if (open) {
+      const previous = body.style.overflow;
+      body.dataset.prevOverflow = previous;
+      body.style.overflow = "hidden";
+    } else if (body.dataset.prevOverflow !== undefined) {
+      body.style.overflow = body.dataset.prevOverflow;
+      delete body.dataset.prevOverflow;
+    } else {
+      body.style.overflow = "";
+    }
+
+    return () => {
+      if (typeof document === "undefined") return;
+      const { body } = document;
+      if (body.dataset.prevOverflow !== undefined) {
+        body.style.overflow = body.dataset.prevOverflow;
+        delete body.dataset.prevOverflow;
+      } else {
+        body.style.overflow = "";
+      }
+    };
+  }, [open]);
 
   return (
     <header className="relative sticky top-0 z-50 border-b border-white/10 bg-[rgba(53,1,4,0.95)] backdrop-blur-xl">
@@ -81,6 +107,7 @@ export function SiteHeader() {
           onClick={toggle}
           aria-controls={mobileNavId}
           aria-expanded={open}
+          aria-haspopup="true"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           <span className="sr-only">Toggle navigation</span>
@@ -88,13 +115,22 @@ export function SiteHeader() {
       </div>
 
       <div
+        role="presentation"
+        className={cn(
+          "fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-300 lg:hidden",
+          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+        )}
+        onClick={close}
+      />
+
+      <div
         id={mobileNavId}
         className={cn(
-          "border-t border-white/10 bg-[rgba(53,1,4,0.95)] px-4 py-6 transition-all duration-300 lg:hidden",
-          open ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"
+          "fixed inset-x-0 top-[4.5rem] z-50 max-h-[calc(100vh-4.5rem)] overflow-y-auto border-t border-white/10 bg-[rgba(53,1,4,0.97)] px-4 py-6 shadow-[0_24px_60px_rgba(22,0,2,0.8)] transition-all duration-300 lg:hidden",
+          open ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
         )}
       >
-        <nav className="flex flex-col gap-3 text-base font-medium text-[var(--color-cream)]">
+        <nav className="flex flex-col gap-2 text-base font-medium text-[var(--color-cream)]">
           {siteConfig.navItems.map((item) => {
             const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
@@ -102,7 +138,7 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "rounded-md px-3 py-2 transition hover:bg-white/10 hover:text-gold",
+                  "rounded-xl px-3 py-3 transition hover:bg-white/10 hover:text-gold",
                   isActive && "bg-white/10 text-white"
                 )}
                 onClick={close}
@@ -119,11 +155,20 @@ export function SiteHeader() {
               href={social.href}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-white/10 px-4 py-2 text-sm text-muted transition hover:border-white/40 hover:text-gold"
+              className="rounded-full border border-white/18 px-4 py-2 text-sm text-muted transition hover:border-white/40 hover:text-gold"
             >
               {social.label}
             </Link>
           ))}
+        </div>
+        <div className="mt-6">
+          <Link
+            href="/bookings"
+            className="btn-gold w-full"
+            onClick={close}
+          >
+            Book The Vibes
+          </Link>
         </div>
       </div>
     </header>
