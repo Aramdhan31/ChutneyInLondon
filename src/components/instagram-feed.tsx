@@ -9,7 +9,7 @@ export function InstagramFeed({ username, className }: InstagramFeedProps) {
   return (
     <div
       className={cn(
-        "relative h-[320px] w-full overflow-hidden rounded-[1.5rem] border border-white/12 bg-[rgba(26,0,3,0.85)] shadow-[0_20px_45px_-18px_rgba(216,15,36,0.55)] sm:h-[360px] md:h-[460px]",
+        "relative w-full overflow-hidden rounded-[1.8rem] border border-white/12 bg-[rgba(26,0,3,0.75)] shadow-[0_24px_50px_-18px_rgba(216,15,36,0.55)]",
         className
       )}
     >
@@ -17,8 +17,10 @@ export function InstagramFeed({ username, className }: InstagramFeedProps) {
         src={`https://www.instagram.com/${username}/embed/`}
         title={`Instagram feed for ${username}`}
         loading="lazy"
-        className="h-[520px] w-full rounded-[2rem] border border-white/10 bg-white sm:h-[640px]"
+        className="h-[620px] w-full min-h-[620px] rounded-[2rem] border border-white/10 bg-white sm:h-[720px] md:h-[840px]"
+        sandbox="allow-scripts allow-same-origin allow-popups"
         frameBorder="0"
+        scrolling="yes"
         allowTransparency
       />
     </div>

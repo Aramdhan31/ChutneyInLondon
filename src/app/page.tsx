@@ -18,6 +18,13 @@ import { SectionHeading } from "@/components/section-heading";
 export default function Home() {
   const [showPopup, setShowPopup] = useState(false);
 
+  const soundcloudSpotlight = siteConfig.socialSpotlights.find(
+    (spotlight) => spotlight.platform === "soundcloud"
+  );
+  const mixcloudSpotlight = siteConfig.socialSpotlights.find(
+    (spotlight) => spotlight.platform === "mixcloud"
+  );
+
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -192,14 +199,19 @@ export default function Home() {
       <section>
         <div className="mx-auto max-w-6xl space-y-12 px-4 sm:px-6">
           <SectionHeading
-            eyebrow="Connect with the movement"
-            title="Tap into socials, mixes, and ticket drops"
-            description="Follow the channels DJ Stylz UK uses to share new dates, cultural spotlights, and exclusive audio from Chutney in London."
+            title="SoundCloud & Mixcloud Sessions"
           />
-          <div className="grid gap-6 lg:grid-cols-3">
-            {siteConfig.socialSpotlights.map((spotlight) => (
-              <SocialCard key={spotlight.id} spotlight={spotlight} />
-            ))}
+          <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+            {soundcloudSpotlight ? (
+              <SocialCard
+                key={soundcloudSpotlight.id}
+                spotlight={soundcloudSpotlight}
+                className="lg:p-8"
+              />
+            ) : null}
+            {mixcloudSpotlight ? (
+              <SocialCard key={mixcloudSpotlight.id} spotlight={mixcloudSpotlight} />
+            ) : null}
           </div>
         </div>
       </section>
@@ -207,76 +219,11 @@ export default function Home() {
       <section>
         <div className="mx-auto max-w-6xl space-y-12 px-4 sm:px-6">
           <SectionHeading
-            eyebrow="Gallery"
-            title="Flashes from recent dancefloors"
-            description="Peak moments captured across London and beyond. Tap to explore the full gallery."
+            eyebrow="Bookings"
+            title="Booking inquiries coming soon"
+            description="We’re finalising new packages for 2025. Drop your email and we’ll notify you as soon as the booking portal opens."
           />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {siteConfig.galleryItems.slice(0, 8).map((item) => (
-              <Link
-                key={item.id}
-                href="/gallery"
-                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-[rgba(53,1,4,0.85)]"
-              >
-                <div
-                  className="h-48 w-full bg-gradient-to-br transition duration-300 group-hover:scale-105"
-                  style={{ backgroundImage: `linear-gradient(135deg, ${item.palette.from}, ${item.palette.via}, ${item.palette.to})` }}
-                />
-                <div className="absolute inset-0 flex flex-col justify-end bg-black/40 p-4 text-white transition group-hover:bg-black/20">
-                  <p className="text-sm uppercase tracking-[0.3em] text-white/60">{item.category}</p>
-                  <h3 className="text-lg font-semibold">{item.title}</h3>
-                  <span className="text-xs text-white/60">{item.year}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-8">
-            <SectionHeading
-              eyebrow="Bookings"
-              title="Bring Chutney in London to your stage"
-              description="Corporate galas, weddings, festivals, and brand activations—we build immersive musical experiences with full cultural authenticity."
-            />
-            <div className="grid gap-4 text-sm text-muted sm:grid-cols-2">
-              <div className="rounded-3xl border border-white/10 bg-[rgba(53,1,4,0.85)] p-5">
-                <h4 className="text-lg font-semibold text-white">What you get</h4>
-                <ul className="mt-3 space-y-2 list-disc pl-4">
-                  <li>Headline DJ set by DJ Stylz UK</li>
-                  <li>Live tassa and percussion options</li>
-                  <li>Dancers, hosts, and MCs available</li>
-                  <li>Custom visuals and lighting design</li>
-                </ul>
-              </div>
-              <div className="rounded-3xl border border-white/10 bg-[rgba(53,1,4,0.85)] p-5">
-                <h4 className="text-lg font-semibold text-white">Travel ready</h4>
-                <ul className="mt-3 space-y-2 list-disc pl-4">
-                  <li>UK & EU coverage</li>
-                  <li>North America appearances</li>
-                  <li>Caribbean residencies</li>
-                  <li>Virtual or hybrid events</li>
-                </ul>
-              </div>
-            </div>
-            <div className="flex flex-wrap items-center gap-4 text-xs uppercase tracking-[0.3em] text-white/60">
-              <span>Trusted by</span>
-              {siteConfig.partners.map((partner) => (
-                <span key={partner} className="rounded-full border border-white/15 px-4 py-2 text-white/80">
-                  {partner}
-                </span>
-              ))}
-            </div>
-            <Link
-              href="/bookings"
-              className="btn-gold"
-            >
-              View bookings info
-            </Link>
-          </div>
-          <NewsletterForm description={siteConfig.newsletter.description} />
+          <NewsletterForm description="Share your email so the team can reach out with booking details once available." />
         </div>
       </section>
     </div>

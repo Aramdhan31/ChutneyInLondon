@@ -18,6 +18,10 @@ type SocialCardProps = {
 
 export function SocialCard({ spotlight, className }: SocialCardProps) {
   const Icon = platformIcon[spotlight.platform];
+  const embedHeightClass =
+    spotlight.platform === "soundcloud"
+      ? "h-[22rem] sm:h-[26rem] lg:h-[28rem]"
+      : "h-64";
 
   return (
     <div
@@ -52,7 +56,7 @@ export function SocialCard({ spotlight, className }: SocialCardProps) {
           <iframe
             src={spotlight.embedUrl}
             title={`${spotlight.title} embed`}
-            className="h-64 w-full"
+            className={cn("w-full", embedHeightClass)}
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
           />
