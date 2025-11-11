@@ -17,7 +17,7 @@ export function FlagStrip({ flags, className, size = 32 }: FlagStripProps) {
   return (
     <div
       className={cn(
-        "flex flex-wrap items-center justify-center gap-2 sm:gap-2.5",
+        "flex flex-nowrap items-center gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:justify-center sm:gap-2.5 sm:overflow-visible sm:pb-0",
         className
       )}
     >
