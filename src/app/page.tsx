@@ -46,16 +46,25 @@ export default function Home() {
     if (typeof window === "undefined") return;
 
     const mobileQuery = window.matchMedia("(max-width: 640px)");
+    const smallMobileQuery = window.matchMedia("(max-width: 420px)");
 
     const updateDuration = () => {
-      setMarqueeDuration(mobileQuery.matches ? 18 : 30);
+      if (smallMobileQuery.matches) {
+        setMarqueeDuration(12);
+      } else if (mobileQuery.matches) {
+        setMarqueeDuration(16);
+      } else {
+        setMarqueeDuration(30);
+      }
     };
 
     updateDuration();
     mobileQuery.addEventListener("change", updateDuration);
+    smallMobileQuery.addEventListener("change", updateDuration);
 
     return () => {
       mobileQuery.removeEventListener("change", updateDuration);
+      smallMobileQuery.removeEventListener("change", updateDuration);
     };
   }, []);
 
@@ -125,7 +134,7 @@ export default function Home() {
         <div className="mx-auto max-w-6xl space-y-10 px-4 sm:px-6">
           <SectionHeading
             eyebrow="The Crew"
-            title="Meet the Chutney in London selectors"
+            title="Meet the team"
             description="The residents and hosts shaping every BYOB takeover—from tassa-driven anthems to late-night riddims."
           />
           {!siteConfig.residentDJs.length ? (
@@ -135,7 +144,12 @@ export default function Home() {
               <motion.div
                 className="flex gap-4 pb-2 sm:pb-4"
                 animate={{ x: ["0%", "-50%"] }}
-                transition={{ duration: marqueeDuration, ease: "linear", repeat: Infinity }}
+                transition={{
+                  duration: marqueeDuration,
+                  ease: "linear",
+                  repeat: Infinity,
+                  repeatDelay: marqueeDuration <= 18 ? 0 : undefined,
+                }}
               >
                 {[...siteConfig.residentDJs, ...siteConfig.residentDJs].map((dj, index) => (
                   <DJCard key={`${dj.id}-${index}`} dj={dj} variant="compact" />

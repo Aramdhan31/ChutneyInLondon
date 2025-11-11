@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { FlagStrip } from "@/components/flag-strip";
 
 const mobileNavId = "mobile-nav";
 
@@ -160,6 +161,9 @@ export function SiteHeader() {
               {social.label}
             </Link>
           ))}
+        </div>
+        <div className="mt-6 border-t border-white/10 pt-6 lg:hidden">
+          <FlagStrip flags={siteConfig.accentFlags} className="justify-start" size={30} />
         </div>
         <div className="mt-6">
           <Link
