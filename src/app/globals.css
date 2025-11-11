@@ -46,6 +46,14 @@ body {
   white-space: nowrap;
 }
 
+.btn-gold-outline.btn-gold-outline-compact {
+  min-height: 2.5rem;
+  min-width: auto;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.24em;
+}
+
 .btn-gold {
   display: inline-flex;
   align-items: center;

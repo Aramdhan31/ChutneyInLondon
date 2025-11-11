@@ -40,9 +40,10 @@ export function SocialCard({ spotlight, className }: SocialCardProps) {
           href={spotlight.href}
           target="_blank"
           rel="noreferrer"
-          className="btn-gold-outline px-4 py-2 text-[11px] uppercase tracking-[0.28em]"
+          className="btn-gold-outline btn-gold-outline-compact gap-2 text-[10px]"
         >
-          Visit <ArrowUpRight className="h-3.5 w-3.5" />
+          <span className="uppercase tracking-[0.32em]">Visit</span>
+          <ArrowUpRight className="h-3.5 w-3.5" />
         </Link>
       </div>
       <p className="mt-4 text-sm leading-relaxed text-muted">{spotlight.description}</p>

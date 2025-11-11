@@ -416,15 +416,6 @@ export const siteConfig = {
       embedUrl:
         "https://www.mixcloud.com/widget/iframe/?hide_cover=1&light=1&feed=%2Fdjstylz18%2F",
     },
-    {
-      id: "eventbrite",
-      platform: "eventbrite",
-      title: "Eventbrite",
-      handle: "Chutney In London Events",
-      description:
-        "Lock in tickets to the next fete, launch parties, and one-off cultural celebrations across the UK.",
-      href: "https://www.eventbrite.co.uk/o/chutney-in-london-42463638213",
-    },
   ] satisfies SocialSpotlight[],
   featuredEvent: {
     id: "bring-ah-bottle-pt4",
