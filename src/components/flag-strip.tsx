@@ -15,7 +15,12 @@ export function FlagStrip({ flags, className, size = 32 }: FlagStripProps) {
   if (!filtered.length) return null;
 
   return (
-    <div className={cn("flex flex-wrap items-center justify-center gap-2", className)}>
+    <div
+      className={cn(
+        "flex flex-wrap items-center justify-center gap-2 sm:gap-2.5",
+        className
+      )}
+    >
       {filtered.map((flag) => {
         const url = flagToTwemoji(flag);
         if (!url) {
@@ -34,8 +39,8 @@ export function FlagStrip({ flags, className, size = 32 }: FlagStripProps) {
               height={size}
               className="rounded-full bg-white/10 p-[2px] shadow-[0_6px_14px_rgba(0,0,0,0.25)]"
               style={{
-                width: `clamp(24px, 8vw, ${size}px)`,
-                height: `clamp(24px, 8vw, ${size}px)`,
+                width: `clamp(28px, 12vw, ${size}px)`,
+                height: `clamp(28px, 12vw, ${size}px)`,
               }}
             />
           </span>

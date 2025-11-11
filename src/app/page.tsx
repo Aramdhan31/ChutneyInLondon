@@ -110,7 +110,7 @@ export default function Home() {
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
           >
-            <div className="w-full max-w-[130px] sm:max-w-[220px] lg:max-w-[340px]">
+            <div className="w-full max-w-[160px] sm:max-w-[240px] lg:max-w-[340px]">
               <BrandSeal flags={siteConfig.accentFlags} />
             </div>
           </motion.div>
