@@ -1,5 +1,4 @@
 import { siteConfig } from "@/config/site";
-import { EventCard } from "@/components/event-card";
 import { FeaturedEventBanner } from "@/components/featured-event-banner";
 import { SectionHeading } from "@/components/section-heading";
 
@@ -10,7 +9,7 @@ export const metadata = {
 };
 
 export default function EventsPage() {
-  const { featuredEvent, upcomingEvents, pastEvents } = siteConfig;
+  const { featuredEvent } = siteConfig;
 
   return (
     <div className="space-y-20 pb-24 pt-24">
@@ -27,35 +26,17 @@ export default function EventsPage() {
 
       {featuredEvent ? <FeaturedEventBanner event={featuredEvent} /> : null}
 
-      <section className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="space-y-10">
-          <SectionHeading
-            eyebrow="Upcoming"
-            title="Secure your spot inside the next fete"
-            description="Limited-capacity events go fast—tap in early to avoid missing the vibes."
-          />
-          <div className="grid gap-6 lg:grid-cols-3">
-            {upcomingEvents.map((event) => (
-              <EventCard key={event.id} event={event} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="space-y-10">
-          <SectionHeading
-            eyebrow="Past vibes"
-            title="Rewind the moments we already shut down"
-            description="From Diwali Bass to Soca on the Thames, here’s a taste of previous Chutney in London experiences."
-          />
-          <div className="grid gap-5 lg:grid-cols-3">
-            {pastEvents.map((event) => (
-              <EventCard key={event.id} event={event} showTickets={false} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <div className="mx-auto max-w-4xl space-y-6 px-4 text-center sm:px-6">
+        <SectionHeading
+          eyebrow="Event listings"
+          title="New dates coming soon"
+          description="We’re prepping the next wave of BYOB takeovers and cultural mashups. Join the mailing list so you’re first to know when tickets drop."
+          align="center"
+        />
+        <p className="text-sm text-muted">
+          Missed the last fete? Follow us on SoundCloud and Mixcloud for live recordings, and watch Instagram for behind-the-scenes footage while the next event is in production.
+        </p>
+      </div>
     </div>
   );
 }
