@@ -33,7 +33,10 @@ export function FlagStrip({ flags, className, size = 32 }: FlagStripProps) {
               width={size}
               height={size}
               className="rounded-full bg-white/10 p-[2px] shadow-[0_6px_14px_rgba(0,0,0,0.25)]"
-              style={{ width: size, height: size }}
+              style={{
+                width: `clamp(24px, 8vw, ${size}px)`,
+                height: `clamp(24px, 8vw, ${size}px)`,
+              }}
             />
           </span>
         );

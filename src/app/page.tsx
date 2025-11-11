@@ -17,6 +17,7 @@ import { SectionHeading } from "@/components/section-heading";
 
 export default function Home() {
   const [showPopup, setShowPopup] = useState(false);
+  const [marqueeDuration, setMarqueeDuration] = useState(30);
 
   const soundcloudSpotlight = siteConfig.socialSpotlights.find(
     (spotlight) => spotlight.platform === "soundcloud"
@@ -39,6 +40,23 @@ export default function Home() {
     }, 200);
 
     return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const mobileQuery = window.matchMedia("(max-width: 640px)");
+
+    const updateDuration = () => {
+      setMarqueeDuration(mobileQuery.matches ? 18 : 30);
+    };
+
+    updateDuration();
+    mobileQuery.addEventListener("change", updateDuration);
+
+    return () => {
+      mobileQuery.removeEventListener("change", updateDuration);
+    };
   }, []);
 
   const handleClosePopup = () => {
@@ -117,7 +135,7 @@ export default function Home() {
               <motion.div
                 className="flex gap-4 pb-2 sm:pb-4"
                 animate={{ x: ["0%", "-50%"] }}
-                transition={{ duration: 30, ease: "linear", repeat: Infinity }}
+                transition={{ duration: marqueeDuration, ease: "linear", repeat: Infinity }}
               >
                 {[...siteConfig.residentDJs, ...siteConfig.residentDJs].map((dj, index) => (
                   <DJCard key={`${dj.id}-${index}`} dj={dj} variant="compact" />
