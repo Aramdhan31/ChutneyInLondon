@@ -30,13 +30,10 @@ export default function Home() {
 
     const timer = window.setTimeout(() => {
       const isMobile = window.matchMedia("(max-width: 767px)").matches;
-      const hasSeen = window.localStorage.getItem("cil_popup_seen");
+      if (isMobile) return;
 
-      if (isMobile) {
-        if (!hasSeen) {
-          setShowPopup(true);
-        }
-      } else {
+      const hasSeen = window.localStorage.getItem("cil_popup_seen");
+      if (!hasSeen) {
         setShowPopup(true);
       }
     }, 200);
@@ -45,7 +42,7 @@ export default function Home() {
   }, []);
 
   const handleClosePopup = () => {
-    if (typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches) {
+    if (typeof window !== "undefined") {
       window.localStorage.setItem("cil_popup_seen", "true");
     }
     setShowPopup(false);
