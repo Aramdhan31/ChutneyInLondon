@@ -21,7 +21,6 @@ export function InstagramFeed({ username, className }: InstagramFeedProps) {
         sandbox="allow-scripts allow-same-origin allow-popups"
         frameBorder="0"
         scrolling="yes"
-        allowTransparency
       />
     </div>
   );

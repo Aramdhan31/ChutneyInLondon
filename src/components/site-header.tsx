@@ -51,7 +51,8 @@ export function SiteHeader() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(243,193,68,0.35),transparent_55%),radial-gradient(circle_at_bottom,rgba(216,15,36,0.4),transparent_60%)]" />
       </div>
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-        <Link href="/" className="group flex items-center gap-3" onClick={close}>
+        <div className="flex items-center gap-3">
+          <Link href="/" className="group flex items-center gap-3" onClick={close}>
           <span
             className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-[#f3c144]/40 bg-[rgba(26,0,3,0.92)] shadow-[0_12px_35px_rgba(243,193,68,0.35)] transition group-hover:scale-105 group-hover:shadow-[0_18px_40px_rgba(243,193,68,0.45)]"
           >
@@ -73,6 +74,7 @@ export function SiteHeader() {
             </span>
           </div>
         </Link>
+        </div>
 
         <nav className="hidden items-center gap-8 text-sm font-medium text-[var(--color-cream)] lg:flex">
           {siteConfig.navItems.map((item) => {
@@ -163,7 +165,14 @@ export function SiteHeader() {
           ))}
         </div>
         <div className="mt-6 border-t border-white/10 pt-6 lg:hidden">
-          <FlagStrip flags={siteConfig.accentFlags} className="justify-start" size={30} />
+          <div className="-mx-2 overflow-x-auto pb-1">
+            <FlagStrip
+              flags={siteConfig.accentFlags}
+              variant="row"
+              className="min-w-max gap-2 px-2"
+              size={28}
+            />
+          </div>
         </div>
         <div className="mt-6">
           <Link

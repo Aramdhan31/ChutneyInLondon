@@ -50,9 +50,9 @@ export default function Home() {
 
     const updateDuration = () => {
       if (smallMobileQuery.matches) {
-        setMarqueeDuration(12);
+        setMarqueeDuration(1.2);
       } else if (mobileQuery.matches) {
-        setMarqueeDuration(16);
+        setMarqueeDuration(2.4);
       } else {
         setMarqueeDuration(30);
       }
@@ -78,39 +78,35 @@ export default function Home() {
   return (
     <div className="space-y-24 pb-24">
       <EventPopup open={showPopup} onClose={handleClosePopup} />
-      <section className="relative overflow-hidden rounded-b-[1.5rem] bg-[radial-gradient(circle_at_20%_20%,rgba(255,222,120,0.14),transparent_40%),radial-gradient(circle_at_80%_15%,rgba(255,68,68,0.1),transparent_45%),linear-gradient(180deg,rgba(53,1,4,0.95) 0%,rgba(53,1,4,0.78) 70%,rgba(53,1,4,0.88) 100%)] px-4 pb-10 pt-4 sm:px-6 sm:pb-16 sm:pt-14 lg:px-8 lg:pb-24 lg:pt-24">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-5 sm:grid sm:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] sm:items-center sm:gap-8">
+      <section className="relative overflow-hidden rounded-b-[1.5rem] bg-[radial-gradient(circle_at_18%_18%,rgba(255,222,120,0.16),transparent_42%),radial-gradient(circle_at_82%_12%,rgba(255,68,68,0.12),transparent_48%),linear-gradient(180deg,rgba(53,1,4,0.95) 0%,rgba(53,1,4,0.78) 70%,rgba(53,1,4,0.88) 100%)] px-5 pb-16 pt-12 sm:px-6 sm:pb-18 sm:pt-14 lg:px-8 lg:pb-24 lg:pt-24">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-12 sm:grid sm:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] sm:items-center sm:gap-8">
           <motion.div
-            className="order-1 w-full space-y-4 text-center text-white sm:order-none sm:text-left"
+            className="order-1 w-full space-y-5 text-center text-white sm:order-none sm:text-left"
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
             <span
-              className="mx-auto inline-flex items-center gap-2 rounded-full border border-white/15 bg-[rgba(53,1,4,0.65)] px-3 py-[4px] text-[8.6px] uppercase tracking-[0.32em] text-gold shadow-[0_10px_24px_rgba(243,193,68,0.25)] sm:mx-0 sm:text-[10px]"
+              className="mx-auto inline-flex items-center gap-2 rounded-full border border-white/15 bg-[rgba(53,1,4,0.62)] px-3 py-[5px] text-[10px] uppercase tracking-[0.32em] text-gold shadow-[0_12px_26px_rgba(243,193,68,0.25)] sm:mx-0"
             >
               DJ Stylz UK Presents
             </span>
             <h1
-              className="text-[1.85rem] font-semibold leading-[1.05] sm:text-[2.6rem] sm:leading-tight md:text-[3.1rem] lg:text-[3.8rem]"
+              className="text-[2.2rem] font-semibold leading-[1.05] sm:text-[2.6rem] sm:leading-tight md:text-[3.1rem] lg:text-[3.8rem]"
               style={{ textShadow: "0 12px 30px rgba(216,15,36,0.45)" }}
             >
               {siteConfig.name}
             </h1>
-            <p className="text-[0.88rem] leading-relaxed text-muted sm:text-[1.05rem] md:text-lg">
+            <p className="text-[0.95rem] leading-relaxed text-muted sm:text-[1.05rem] md:text-lg">
               UK’s No1 IndoCaribbean Party Experience. Specialists in Chutney, Soca, Bollywood, Dancehall plus global fusion — culture and events that feel like home.
             </p>
-            <div className="flex flex-col items-center gap-2 sm:flex-row sm:items-start sm:gap-3">
-              <Link href="/events" className="btn-gold w-full sm:w-auto sm:px-7">
+            <div className="flex flex-col items-center gap-3 sm:flex-row sm:items-start sm:gap-3">
+              <Link href="/events" className="btn-gold w-full shadow-[0_14px_34px_rgba(243,193,68,0.35)] sm:w-auto sm:px-7">
                 See Upcoming Events
               </Link>
               <Link href="/music-media" className="btn-gold-outline w-full sm:w-auto sm:px-7 text-sm font-semibold">
                 Listen Now
               </Link>
-            </div>
-            <div className="mt-5 hidden items-center gap-2 text-[11px] uppercase tracking-[0.42em] text-gold sm:flex">
-              <span className="h-[1px] w-8 bg-gold/60" aria-hidden />
-              Swipe below to explore the crew
             </div>
           </motion.div>
           <motion.div
@@ -119,8 +115,8 @@ export default function Home() {
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
           >
-            <div className="w-full max-w-[160px] sm:max-w-[240px] lg:max-w-[340px]">
-              <BrandSeal flags={siteConfig.accentFlags} />
+            <div className="w-full max-w-[260px] sm:max-w-[260px] lg:max-w-[340px]">
+              <BrandSeal flags={siteConfig.accentFlags} className="sm:translate-y-2" />
             </div>
           </motion.div>
         </div>
