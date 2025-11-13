@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 :root {
   --color-body: #350104;
   --color-surface: rgba(78, 4, 13, 0.9);

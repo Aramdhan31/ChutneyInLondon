@@ -18,6 +18,7 @@ export function DJGalleryCarousel({
   const manualScrollRef = useRef(false);
   const currentOffsetRef = useRef(0);
   const [transformX, setTransformX] = useState(0);
+  const [isAutoScroll, setIsAutoScroll] = useState(true);
   
   // Touch and drag handlers
   const touchStartRef = useRef<number | null>(null);
@@ -29,8 +30,58 @@ export function DJGalleryCarousel({
   // When first set scrolls -50%, duplicate set is in exact same position = seamless loop
   const duplicatedDjs = [...djs, ...djs];
 
+  // Calculate animation duration based on number of items and screen size
+  const getAnimationDuration = useCallback(() => {
+    if (typeof window === 'undefined') return djs.length * 2;
+    const isMobile = window.innerWidth < 768;
+    return isMobile ? djs.length * 1.5 : djs.length * 3;
+  }, [djs.length]);
+  
+  const [animationDuration, setAnimationDuration] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const isMobile = window.innerWidth < 768;
+      return isMobile ? djs.length * 1.5 : djs.length * 3;
+    }
+    return djs.length * 2;
+  });
+  
+  useEffect(() => {
+    const updateDuration = () => {
+      setAnimationDuration(getAnimationDuration());
+    };
+    
+    updateDuration();
+    window.addEventListener('resize', updateDuration);
+    return () => window.removeEventListener('resize', updateDuration);
+  }, [getAnimationDuration]);
 
-  // No auto-scroll - manual navigation only
+  // Pause auto-scroll and switch to manual mode
+  const pauseAutoScroll = useCallback(() => {
+    if (!marqueeRef.current || !isAutoScroll) return;
+    
+    const container = marqueeRef.current;
+    
+    // Get the computed transform from the running animation
+    const computedStyle = window.getComputedStyle(container);
+    const transform = computedStyle.transform;
+    
+    let currentPos = 0;
+    if (transform && transform !== 'none') {
+      const matrix = new DOMMatrix(transform);
+      currentPos = matrix.e;
+    }
+    // If no transform, animation is at 0% or just started, so currentPos stays 0
+    
+    // Stop animation and switch to manual
+    setIsAutoScroll(false);
+    manualScrollRef.current = true;
+    currentOffsetRef.current = currentPos;
+    setTransformX(currentPos);
+    container.style.animation = 'none';
+    container.style.animationDelay = '0s';
+    container.style.transform = `translateX(${currentPos}px)`;
+    container.style.transition = 'none';
+  }, [isAutoScroll]);
 
   // Get current animation position from computed style
   const getCurrentAnimationPosition = useCallback(() => {
@@ -42,10 +93,8 @@ export function DJGalleryCarousel({
       const matrix = new DOMMatrix(transform);
       return matrix.e; // e is the translateX value
     }
-    return 0;
+    return currentOffsetRef.current;
   }, []);
-
-  // No auto-scroll - manual navigation only, so no resumeAnimation needed
 
   // Get item width helper
   const getItemWidth = useCallback(() => {
@@ -61,6 +110,12 @@ export function DJGalleryCarousel({
   // Touch handlers for mobile
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     if (!marqueeRef.current) return;
+    
+    // Pause auto-scroll if it's still running
+    if (isAutoScroll) {
+      pauseAutoScroll();
+    }
+    
     const touch = e.touches[0];
     touchStartXRef.current = touch.clientX;
     touchStartRef.current = Date.now();
@@ -76,7 +131,8 @@ export function DJGalleryCarousel({
     container.style.animation = 'none';
     container.style.animationDelay = '0s';
     currentOffsetRef.current = currentPos;
-  }, [getCurrentAnimationPosition]);
+    setTransformX(currentPos);
+  }, [isAutoScroll, pauseAutoScroll, getCurrentAnimationPosition]);
 
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
     if (!isDraggingRef.current || !marqueeRef.current || touchStartXRef.current === null) return;
@@ -134,6 +190,11 @@ export function DJGalleryCarousel({
     if (!marqueeRef.current) return;
     e.preventDefault();
     
+    // Pause auto-scroll if it's still running
+    if (isAutoScroll) {
+      pauseAutoScroll();
+    }
+    
     isDraggingRef.current = true;
     dragStartXRef.current = e.clientX;
     
@@ -147,7 +208,8 @@ export function DJGalleryCarousel({
     container.style.animation = 'none';
     container.style.animationDelay = '0s';
     currentOffsetRef.current = currentPos;
-  }, [getCurrentAnimationPosition]);
+    setTransformX(currentPos);
+  }, [isAutoScroll, pauseAutoScroll, getCurrentAnimationPosition]);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!isDraggingRef.current || !marqueeRef.current) return;
@@ -208,9 +270,15 @@ export function DJGalleryCarousel({
     };
   }, [handleMouseMove, handleMouseUp]);
 
-  // Manual scroll functions - no auto-scroll, only arrow navigation
+  // Manual scroll functions - pause auto-scroll when arrows are clicked
   const handleScrollPrev = useCallback(() => {
     if (!marqueeRef.current) return;
+    
+    // Pause auto-scroll if it's still running
+    if (isAutoScroll) {
+      pauseAutoScroll();
+    }
+    
     const container = marqueeRef.current;
     
     // Get current position
@@ -230,10 +298,16 @@ export function DJGalleryCarousel({
     setTransformX(currentOffsetRef.current);
     container.style.transform = `translateX(${currentOffsetRef.current}px)`;
     container.style.transition = 'transform 0.4s ease-out';
-  }, [getCurrentAnimationPosition, getItemWidth]);
+  }, [isAutoScroll, pauseAutoScroll, getCurrentAnimationPosition, getItemWidth]);
 
   const handleScrollNext = useCallback(() => {
     if (!marqueeRef.current) return;
+    
+    // Pause auto-scroll if it's still running
+    if (isAutoScroll) {
+      pauseAutoScroll();
+    }
+    
     const container = marqueeRef.current;
     
     // Get current position
@@ -253,7 +327,7 @@ export function DJGalleryCarousel({
     setTransformX(currentOffsetRef.current);
     container.style.transform = `translateX(${currentOffsetRef.current}px)`;
     container.style.transition = 'transform 0.4s ease-out';
-  }, [getCurrentAnimationPosition, getItemWidth]);
+  }, [isAutoScroll, pauseAutoScroll, getCurrentAnimationPosition, getItemWidth]);
 
   return (
     <div className="mt-6 sm:mt-8 md:mt-10">
@@ -287,13 +361,19 @@ export function DJGalleryCarousel({
         className="w-full -mx-4 sm:mx-0 overflow-hidden"
       >
         <div className="relative">
-          {/* Manual navigation carousel - no auto-scroll */}
+          {/* Auto-scroll carousel that switches to manual when user interacts */}
           <div 
             ref={marqueeRef}
             className="flex gap-2 sm:gap-3 md:gap-4 will-change-transform cursor-grab active:cursor-grabbing select-none"
-            style={{
-              transform: `translateX(${transformX}px)`,
-            }}
+            style={
+              isAutoScroll
+                ? {
+                    animation: `marquee ${animationDuration}s linear infinite`,
+                  }
+                : {
+                    transform: `translateX(${transformX}px)`,
+                  }
+            }
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}

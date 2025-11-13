@@ -39,7 +39,7 @@ export function BrandSeal({ className, flags }: BrandSealProps) {
           <FlagStrip
             flags={displayFlags}
             className="justify-center"
-            size={30}
+            size={36}
             columns={4}
           />
         </div>
