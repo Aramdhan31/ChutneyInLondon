@@ -31,8 +31,8 @@ export function FlagStrip({
     <div
       className={cn(
         variant === "grid"
-          ? "grid justify-items-center gap-1.5 text-center sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-2.5"
-          : "flex flex-nowrap items-center gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:items-center sm:justify-center sm:gap-2.5 sm:overflow-visible sm:pb-0",
+          ? "grid justify-items-center gap-2 text-center sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-2.5"
+          : "flex flex-nowrap items-center gap-4 sm:gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:items-center sm:justify-center sm:gap-2.5 sm:overflow-visible sm:pb-0",
         className
       )}
       style={
@@ -61,9 +61,13 @@ export function FlagStrip({
               height={size}
               className="rounded-full bg-white/10 p-[2px] shadow-[0_6px_14px_rgba(0,0,0,0.25)]"
               style={{
-                width: variant === "grid" ? `clamp(26px, 8vw, ${size}px)` : `clamp(24px, 10vw, ${size}px)`,
+                width: variant === "grid" 
+                  ? `clamp(60px, 8vw, ${size}px)` 
+                  : `clamp(60px, 28vw, ${size}px)`,
                 height:
-                  variant === "grid" ? `clamp(26px, 8vw, ${size}px)` : `clamp(24px, 10vw, ${size}px)`,
+                  variant === "grid" 
+                    ? `clamp(60px, 8vw, ${size}px)` 
+                    : `clamp(60px, 28vw, ${size}px)`,
               }}
             />
           </span>

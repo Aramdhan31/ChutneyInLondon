@@ -6,10 +6,11 @@ import { motion } from "framer-motion";
 
 import { siteConfig } from "@/config/site";
 import { BrandSeal } from "@/components/brand-seal";
-import { DJCard } from "@/components/dj-card";
+import { DJGalleryCarousel } from "@/components/dj-gallery-carousel";
 import { EventPopup } from "@/components/event-popup";
 import { EventbriteWidget } from "@/components/eventbrite-widget";
 import { FeaturedEventBanner } from "@/components/featured-event-banner";
+import { FlagStrip } from "@/components/flag-strip";
 import { InstagramFeed } from "@/components/instagram-feed";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { SocialCard } from "@/components/social-card";
@@ -17,7 +18,6 @@ import { SectionHeading } from "@/components/section-heading";
 
 export default function Home() {
   const [showPopup, setShowPopup] = useState(false);
-  const [marqueeDuration, setMarqueeDuration] = useState(30);
 
   const soundcloudSpotlight = siteConfig.socialSpotlights.find(
     (spotlight) => spotlight.platform === "soundcloud"
@@ -42,31 +42,6 @@ export default function Home() {
     return () => window.clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const mobileQuery = window.matchMedia("(max-width: 640px)");
-    const smallMobileQuery = window.matchMedia("(max-width: 420px)");
-
-    const updateDuration = () => {
-      if (smallMobileQuery.matches) {
-        setMarqueeDuration(1.2);
-      } else if (mobileQuery.matches) {
-        setMarqueeDuration(2.4);
-      } else {
-        setMarqueeDuration(30);
-      }
-    };
-
-    updateDuration();
-    mobileQuery.addEventListener("change", updateDuration);
-    smallMobileQuery.addEventListener("change", updateDuration);
-
-    return () => {
-      mobileQuery.removeEventListener("change", updateDuration);
-      smallMobileQuery.removeEventListener("change", updateDuration);
-    };
-  }, []);
 
   const handleClosePopup = () => {
     if (typeof window !== "undefined") {
@@ -76,47 +51,55 @@ export default function Home() {
   };
 
   return (
-    <div className="space-y-24 pb-24">
+    <div className="space-y-16 sm:space-y-20 md:space-y-24 pb-12 sm:pb-16 md:pb-24">
       <EventPopup open={showPopup} onClose={handleClosePopup} />
-      <section className="relative overflow-hidden rounded-b-[1.5rem] bg-[radial-gradient(circle_at_18%_18%,rgba(255,222,120,0.16),transparent_42%),radial-gradient(circle_at_82%_12%,rgba(255,68,68,0.12),transparent_48%),linear-gradient(180deg,rgba(53,1,4,0.95) 0%,rgba(53,1,4,0.78) 70%,rgba(53,1,4,0.88) 100%)] px-5 pb-16 pt-12 sm:px-6 sm:pb-18 sm:pt-14 lg:px-8 lg:pb-24 lg:pt-24">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-12 sm:grid sm:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] sm:items-center sm:gap-8">
+      <section className="relative overflow-hidden rounded-b-[1.5rem] sm:rounded-b-[2rem] bg-[radial-gradient(circle_at_18%_18%,rgba(255,222,120,0.16),transparent_42%),radial-gradient(circle_at_82%_12%,rgba(255,68,68,0.12),transparent_48%),linear-gradient(180deg,rgba(53,1,4,0.95) 0%,rgba(53,1,4,0.78) 70%,rgba(53,1,4,0.88) 100%)] px-4 pb-10 pt-10 sm:px-5 sm:pb-16 sm:pt-12 md:px-6 lg:px-8 lg:pb-24 lg:pt-24">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-6 sm:gap-12 sm:grid sm:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] sm:items-center sm:gap-8">
           <motion.div
-            className="order-1 w-full space-y-5 text-center text-white sm:order-none sm:text-left"
+            className="order-1 w-full space-y-4 sm:space-y-5 text-center text-white sm:order-none sm:text-left"
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
             <span
-              className="mx-auto inline-flex items-center gap-2 rounded-full border border-white/15 bg-[rgba(53,1,4,0.62)] px-3 py-[5px] text-[10px] uppercase tracking-[0.32em] text-gold shadow-[0_12px_26px_rgba(243,193,68,0.25)] sm:mx-0"
+              className="mx-auto inline-flex items-center gap-2 rounded-full border border-white/15 bg-[rgba(53,1,4,0.62)] px-3 py-1.5 sm:px-3 sm:py-[5px] text-[10px] sm:text-[10px] uppercase tracking-[0.28em] sm:tracking-[0.32em] text-gold shadow-[0_12px_26px_rgba(243,193,68,0.25)] sm:mx-0"
             >
               DJ Stylz UK Presents
             </span>
             <h1
-              className="text-[2.2rem] font-semibold leading-[1.05] sm:text-[2.6rem] sm:leading-tight md:text-[3.1rem] lg:text-[3.8rem]"
+              className="text-[2.25rem] sm:text-[2.2rem] font-semibold leading-[1.05] md:text-[2.6rem] md:leading-tight lg:text-[3.1rem] xl:text-[3.8rem]"
               style={{ textShadow: "0 12px 30px rgba(216,15,36,0.45)" }}
             >
               {siteConfig.name}
             </h1>
-            <p className="text-[0.95rem] leading-relaxed text-muted sm:text-[1.05rem] md:text-lg">
-              UK’s No1 IndoCaribbean Party Experience. Specialists in Chutney, Soca, Bollywood, Dancehall plus global fusion — culture and events that feel like home.
+            <p className="text-base sm:text-[0.95rem] leading-relaxed text-muted md:text-[1.05rem] lg:text-lg">
+              UK's No1 IndoCaribbean Party Experience. Specialists in Chutney, Soca, Bollywood, Dancehall plus global fusion — culture and events that feel like home.
             </p>
-            <div className="flex flex-col items-center gap-3 sm:flex-row sm:items-start sm:gap-3">
-              <Link href="/events" className="btn-gold w-full shadow-[0_14px_34px_rgba(243,193,68,0.35)] sm:w-auto sm:px-7">
+            <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-start sm:gap-3">
+              <Link href="/events" className="btn-gold w-full shadow-[0_14px_34px_rgba(243,193,68,0.35)] sm:w-auto sm:px-7 text-center min-h-[2.75rem] sm:min-h-[3rem] touch-manipulation">
                 See Upcoming Events
               </Link>
-              <Link href="/music-media" className="btn-gold-outline w-full sm:w-auto sm:px-7 text-sm font-semibold">
+              <Link href="/music-media" className="btn-gold-outline w-full sm:w-auto sm:px-7 text-sm font-semibold text-center min-h-[2.75rem] sm:min-h-[3rem] touch-manipulation">
                 Listen Now
               </Link>
             </div>
           </motion.div>
           <motion.div
-            className="order-2 flex w-full justify-center sm:order-none sm:justify-end"
+            className="order-2 flex w-full flex-col items-center gap-4 sm:order-none sm:items-end sm:gap-5"
             initial={{ opacity: 0, scale: 0.92, rotate: -4 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
           >
-            <div className="w-full max-w-[260px] sm:max-w-[260px] lg:max-w-[340px]">
-              <BrandSeal flags={siteConfig.accentFlags} className="sm:translate-y-2" />
+            <div className="w-full max-w-[220px] sm:max-w-[260px] lg:max-w-[340px]">
+              <BrandSeal className="sm:translate-y-2" />
+            </div>
+            <div className="w-full max-w-full sm:max-w-[260px] lg:max-w-[340px] px-2 sm:px-0">
+              <FlagStrip 
+                flags={siteConfig.accentFlags} 
+                className="justify-center sm:justify-end"
+                size={72}
+                variant="row"
+              />
             </div>
           </motion.div>
         </div>
@@ -127,7 +110,7 @@ export default function Home() {
       ) : null}
 
       <section>
-        <div className="mx-auto max-w-6xl space-y-10 px-4 sm:px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <SectionHeading
             eyebrow="The Crew"
             title="Meet the team"
@@ -136,22 +119,7 @@ export default function Home() {
           {!siteConfig.residentDJs.length ? (
             <p className="text-sm text-muted">DJ lineup coming soon.</p>
           ) : (
-            <div className="relative overflow-hidden">
-              <motion.div
-                className="flex gap-4 pb-2 sm:pb-4"
-                animate={{ x: ["0%", "-50%"] }}
-                transition={{
-                  duration: marqueeDuration,
-                  ease: "linear",
-                  repeat: Infinity,
-                  repeatDelay: marqueeDuration <= 18 ? 0 : undefined,
-                }}
-              >
-                {[...siteConfig.residentDJs, ...siteConfig.residentDJs].map((dj, index) => (
-                  <DJCard key={`${dj.id}-${index}`} dj={dj} variant="compact" />
-                ))}
-              </motion.div>
-            </div>
+            <DJGalleryCarousel djs={siteConfig.residentDJs} />
           )}
         </div>
       </section>
@@ -164,30 +132,32 @@ export default function Home() {
               title="Book directly on Eventbrite"
               description="Secure your place at the next BYOB takeover. Limited allocations drop first on Eventbrite—move fast."
             />
-            <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-              <div className="space-y-3">
-                <p className="text-xs uppercase tracking-[0.35em] text-gold">Eventbrite</p>
+            <div className="grid gap-6 sm:gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="space-y-3 sm:space-y-4">
+                <p className="text-xs sm:text-sm uppercase tracking-[0.35em] sm:tracking-[0.4em] text-gold">Eventbrite</p>
                 <EventbriteWidget widgetUrl={siteConfig.featuredEvent.widgetUrl} />
               </div>
-              <div className="space-y-6 rounded-[2.5rem] border border-white/12 bg-[rgba(26,0,3,0.85)] p-8 shadow-[0_24px_60px_rgba(59,0,4,0.5)]">
-                <div className="space-y-3 text-sm text-muted">
-                  <p className="text-lg font-semibold text-white">{siteConfig.featuredEvent.title}</p>
-                  {siteConfig.featuredEvent.description.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
+              <div className="space-y-4 sm:space-y-5 md:space-y-6 rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] border border-white/12 bg-[rgba(26,0,3,0.85)] p-4 sm:p-5 md:p-6 lg:p-8 shadow-[0_24px_60px_rgba(59,0,4,0.5)]">
+                <div className="space-y-2 sm:space-y-3">
+                  <p className="text-base sm:text-lg md:text-xl font-semibold text-white leading-tight">{siteConfig.featuredEvent.title}</p>
+                  <div className="space-y-2 text-xs sm:text-sm text-muted leading-relaxed">
+                    {siteConfig.featuredEvent.description.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
                 </div>
-                <ul className="space-y-2 text-sm text-muted">
+                <ul className="space-y-2 sm:space-y-2.5 text-xs sm:text-sm text-muted">
                   {siteConfig.featuredEvent.services.map((line) => (
-                    <li key={line} className="rounded-2xl border border-white/10 bg-[rgba(53,1,4,0.65)] px-4 py-3">
+                    <li key={line} className="rounded-xl sm:rounded-2xl border border-white/10 bg-[rgba(53,1,4,0.65)] px-3 py-2 sm:px-4 sm:py-2.5 md:py-3">
                       {line}
                     </li>
                   ))}
                 </ul>
-                <div className="space-y-1 text-sm text-muted">
+                <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted">
                   <p className="font-semibold text-white">Need a table or bringing a large crew?</p>
-                  <p>
+                  <p className="leading-relaxed">
                     WhatsApp the team at{" "}
-                    <Link href={`tel:${siteConfig.featuredEvent.contact}`} className="text-gold">
+                    <Link href={`tel:${siteConfig.featuredEvent.contact}`} className="text-gold break-all hover:underline">
                       {siteConfig.featuredEvent.contact}
                     </Link>{" "}
                     for priority info.
@@ -211,7 +181,7 @@ export default function Home() {
       )}
 
       <section>
-        <div className="mx-auto max-w-6xl space-y-10 px-4 sm:px-6">
+        <div className="mx-auto max-w-6xl space-y-6 sm:space-y-8 md:space-y-10 px-4 sm:px-6">
           <SectionHeading
             eyebrow="Instagram"
             title="Latest from @chutneyinlondon"
@@ -222,11 +192,11 @@ export default function Home() {
       </section>
 
       <section>
-        <div className="mx-auto max-w-6xl space-y-12 px-4 sm:px-6">
+        <div className="mx-auto max-w-6xl space-y-8 sm:space-y-10 md:space-y-12 px-4 sm:px-6">
           <SectionHeading
             title="SoundCloud & Mixcloud Sessions"
           />
-          <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+          <div className="grid gap-4 sm:gap-5 md:gap-6 lg:grid-cols-[1.4fr_1fr]">
             {soundcloudSpotlight ? (
               <SocialCard
                 key={soundcloudSpotlight.id}

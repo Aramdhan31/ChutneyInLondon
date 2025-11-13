@@ -28,18 +28,18 @@ export function NewsletterForm({ className, description }: NewsletterFormProps) 
   return (
     <div
       className={cn(
-        "rounded-3xl border border-white/10 bg-[rgba(53,1,4,0.85)] p-8 shadow-[0_0_55px_-15px_rgba(243,193,68,0.55)]",
+        "rounded-2xl sm:rounded-3xl border border-white/10 bg-[rgba(53,1,4,0.85)] p-5 sm:p-6 md:p-8 shadow-[0_0_55px_-15px_rgba(243,193,68,0.55)]",
         className
       )}
     >
-      <h3 className="text-xl font-semibold text-white">Join the Vibe List</h3>
-      {description ? <p className="mt-2 text-sm text-muted">{description}</p> : null}
+      <h3 className="text-lg sm:text-xl font-semibold text-white">Join the Vibe List</h3>
+      {description ? <p className="mt-2 text-sm sm:text-sm text-muted leading-relaxed">{description}</p> : null}
       {submitted ? (
-        <p className="mt-6 rounded-2xl bg-green-500/20 px-4 py-3 text-sm font-medium text-green-300">
-          Respect! You’re officially in the loop. Check your inbox for confirmation.
+        <p className="mt-4 sm:mt-6 rounded-xl sm:rounded-2xl bg-green-500/20 px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm font-medium text-green-300">
+          Respect! You're officially in the loop. Check your inbox for confirmation.
         </p>
       ) : (
-        <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3 sm:flex-row">
+        <form onSubmit={handleSubmit} className="mt-4 sm:mt-6 flex flex-col gap-2.5 sm:gap-3 sm:flex-row">
           <label htmlFor="email" className="sr-only">
             Email address
           </label>
@@ -49,17 +49,17 @@ export function NewsletterForm({ className, description }: NewsletterFormProps) 
             type="email"
             required
             placeholder="you@email.com"
-            className="w-full rounded-full border border-white/15 bg-[rgba(29,0,4,0.75)] px-5 py-3 text-sm text-white placeholder:text-white/50 focus:border-[rgba(243,193,68,0.8)] focus:outline-none focus:ring-2 focus:ring-[rgba(243,193,68,0.35)] sm:flex-1"
+            className="w-full rounded-full border border-white/15 bg-[rgba(29,0,4,0.75)] px-4 py-2.5 sm:px-5 sm:py-3 text-sm text-white placeholder:text-white/50 focus:border-[rgba(243,193,68,0.8)] focus:outline-none focus:ring-2 focus:ring-[rgba(243,193,68,0.35)] sm:flex-1"
           />
           <button
             type="submit"
-            className="btn-gold w-full px-6 py-3 text-sm sm:w-auto"
+            className="btn-gold w-full px-5 py-2.5 sm:px-6 sm:py-3 text-sm sm:w-auto"
           >
             Subscribe
           </button>
         </form>
       )}
-      <p className="mt-3 text-xs text-muted">No spam. Just events, mixes, and exclusive drops.</p>
+      <p className="mt-2.5 sm:mt-3 text-xs sm:text-xs text-muted">No spam. Just events, mixes, and exclusive drops.</p>
     </div>
   );
 }

@@ -160,17 +160,17 @@ export function EventPopup({ open, onClose, className }: EventPopupProps) {
             </div>
 
             <div className="mt-auto flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div className="text-xs uppercase tracking-[0.3em] text-white/70 text-center sm:text-left">
+              <div className="text-[10px] sm:text-xs uppercase tracking-[0.25em] sm:tracking-[0.3em] text-white/70 text-center sm:text-left">
                 Hosted by DJ Stylz UK • Chutney in London
               </div>
               <Link
                 href={event.ticketLink}
                 target="_blank"
                 rel="noreferrer"
-                className="btn-gold w-full sm:w-auto sm:min-w-[11rem]"
+                className="btn-gold w-full sm:w-auto sm:min-w-[11rem] flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm touch-manipulation"
               >
-                <Ticket className="h-4 w-4" />
-                {event.ticketLabel ?? "Buy Tickets"}
+                <Ticket className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
+                <span className="whitespace-nowrap">{event.ticketLabel ?? "Buy Tickets"}</span>
               </Link>
             </div>
           </div>
