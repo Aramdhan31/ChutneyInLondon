@@ -10,7 +10,6 @@ import { DJGalleryCarousel } from "@/components/dj-gallery-carousel";
 import { EventPopup } from "@/components/event-popup";
 import { EventbriteWidget } from "@/components/eventbrite-widget";
 import { FeaturedEventBanner } from "@/components/featured-event-banner";
-import { FlagStrip } from "@/components/flag-strip";
 import { InstagramFeed } from "@/components/instagram-feed";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { SocialCard } from "@/components/social-card";
@@ -91,15 +90,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
           >
             <div className="w-full max-w-[220px] sm:max-w-[260px] lg:max-w-[340px]">
-              <BrandSeal className="sm:translate-y-2" />
-            </div>
-            <div className="w-full max-w-full sm:max-w-[260px] lg:max-w-[340px] px-2 sm:px-0">
-              <FlagStrip 
-                flags={siteConfig.accentFlags} 
-                className="justify-center sm:justify-end"
-                size={72}
-                variant="row"
-              />
+              <BrandSeal flags={siteConfig.accentFlags} className="sm:translate-y-2" />
             </div>
           </motion.div>
         </div>

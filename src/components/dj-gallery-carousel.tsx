@@ -15,9 +15,9 @@ export function DJGalleryCarousel({
   djs,
 }: DJGalleryCarouselProps) {
   const marqueeRef = useRef<HTMLDivElement>(null);
-  const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const manualScrollRef = useRef(false);
   const currentOffsetRef = useRef(0);
+  const [transformX, setTransformX] = useState(0);
   
   // Touch and drag handlers
   const touchStartRef = useRef<number | null>(null);
@@ -30,44 +30,7 @@ export function DJGalleryCarousel({
   const duplicatedDjs = [...djs, ...djs];
 
 
-  // Calculate animation duration based on number of items and screen size
-  // Faster on mobile, slower on desktop for better UX
-  const getAnimationDuration = useCallback(() => {
-    if (typeof window === 'undefined') return djs.length * 1.5;
-    const isMobile = window.innerWidth < 768;
-    return isMobile ? djs.length * 1.2 : djs.length * 3; // Much faster on mobile
-  }, [djs.length]);
-  
-  const [animationDuration, setAnimationDuration] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const isMobile = window.innerWidth < 768;
-      return isMobile ? djs.length * 1.2 : djs.length * 3;
-    }
-    return djs.length * 1.5;
-  });
-  
-  useEffect(() => {
-    const updateDuration = () => {
-      setAnimationDuration(getAnimationDuration());
-    };
-    
-    // Update on mount and resize
-    updateDuration();
-    window.addEventListener('resize', updateDuration);
-    return () => window.removeEventListener('resize', updateDuration);
-  }, [getAnimationDuration]);
-
-  const handleMouseEnter = useCallback(() => {
-    if (marqueeRef.current) {
-      marqueeRef.current.style.animationPlayState = 'paused';
-    }
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    if (marqueeRef.current) {
-      marqueeRef.current.style.animationPlayState = 'running';
-    }
-  }, []);
+  // No auto-scroll - manual navigation only
 
   // Get current animation position from computed style
   const getCurrentAnimationPosition = useCallback(() => {
@@ -82,42 +45,7 @@ export function DJGalleryCarousel({
     return 0;
   }, []);
 
-  // Resume animation from current position
-  const resumeAnimation = useCallback(() => {
-    if (!marqueeRef.current) return;
-    const container = marqueeRef.current;
-    
-    // Get current scroll position
-    const currentPos = currentOffsetRef.current;
-    
-    // Calculate the container width (half of total content width for seamless loop)
-    const containerWidth = container.scrollWidth / 2;
-    
-    // Calculate what percentage through the animation cycle we are
-    // Marquee animates from 0 to -50% (which is -containerWidth)
-    // Normalize current position to be within the animation range
-    let normalizedPos = currentPos % containerWidth;
-    if (normalizedPos > 0) normalizedPos -= containerWidth;
-    
-    // Calculate animation delay to start from current position
-    // Animation goes from 0 to -containerWidth over animationDuration seconds
-    const progress = Math.abs(normalizedPos) / containerWidth; // 0 to 1
-    const animationDelay = -(progress * animationDuration); // Negative delay to start partway
-    
-    // Resume animation from current position
-    manualScrollRef.current = false;
-    container.style.transition = '';
-    container.style.transform = '';
-    container.style.animation = `marquee ${animationDuration}s linear infinite`;
-    container.style.animationDelay = `${animationDelay}s`;
-    
-    // Reset delay after one cycle to maintain seamless loop
-    setTimeout(() => {
-      if (container) {
-        container.style.animationDelay = '0s';
-      }
-    }, (1 - progress) * animationDuration * 1000);
-  }, [animationDuration]);
+  // No auto-scroll - manual navigation only, so no resumeAnimation needed
 
   // Get item width helper
   const getItemWidth = useCallback(() => {
@@ -197,16 +125,9 @@ export function DJGalleryCarousel({
     
     const container = marqueeRef.current;
     container.style.transition = 'transform 0.3s ease-out';
+    setTransformX(currentOffsetRef.current);
     container.style.transform = `translateX(${currentOffsetRef.current}px)`;
-    
-    // Resume animation after delay
-    if (pauseTimeoutRef.current) {
-      clearTimeout(pauseTimeoutRef.current);
-    }
-    pauseTimeoutRef.current = setTimeout(() => {
-      resumeAnimation();
-    }, 500);
-  }, [getItemWidth, resumeAnimation]);
+  }, [getItemWidth]);
 
   // Mouse drag handlers for desktop
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
@@ -260,16 +181,9 @@ export function DJGalleryCarousel({
     
     const container = marqueeRef.current;
     container.style.transition = 'transform 0.3s ease-out';
+    setTransformX(currentOffsetRef.current);
     container.style.transform = `translateX(${currentOffsetRef.current}px)`;
-    
-    // Resume animation after delay
-    if (pauseTimeoutRef.current) {
-      clearTimeout(pauseTimeoutRef.current);
-    }
-    pauseTimeoutRef.current = setTimeout(() => {
-      resumeAnimation();
-    }, 500);
-  }, [getItemWidth, resumeAnimation]);
+  }, [getItemWidth]);
 
   // Add global mouse event listeners for drag
   useEffect(() => {
@@ -294,94 +208,52 @@ export function DJGalleryCarousel({
     };
   }, [handleMouseMove, handleMouseUp]);
 
-  // Manual scroll functions - pause animation, scroll manually, then resume
+  // Manual scroll functions - no auto-scroll, only arrow navigation
   const handleScrollPrev = useCallback(() => {
     if (!marqueeRef.current) return;
     const container = marqueeRef.current;
     
-    // Clear any existing timeout
-    if (pauseTimeoutRef.current) {
-      clearTimeout(pauseTimeoutRef.current);
-    }
-    
-    // Get current position before stopping animation
+    // Get current position
     const currentPos = manualScrollRef.current 
       ? currentOffsetRef.current 
       : getCurrentAnimationPosition();
     
-    // Stop animation and enable manual scrolling
+    // Enable manual scrolling
     manualScrollRef.current = true;
     container.style.animation = 'none';
     container.style.animationDelay = '0s';
-    
-    // Calculate item width based on screen size
-    const getItemWidth = () => {
-      if (typeof window === 'undefined') return 200;
-      if (window.innerWidth < 640) return 200 + 8; // width + gap
-      if (window.innerWidth < 768) return 280 + 12;
-      if (window.innerWidth < 1024) return 320 + 12;
-      if (window.innerWidth < 1280) return 380 + 16;
-      if (window.innerWidth < 1536) return 420 + 16;
-      return 450 + 16;
-    };
     
     const itemWidth = getItemWidth();
     currentOffsetRef.current = currentPos + itemWidth;
     
     // Apply manual scroll
+    setTransformX(currentOffsetRef.current);
     container.style.transform = `translateX(${currentOffsetRef.current}px)`;
     container.style.transition = 'transform 0.4s ease-out';
-    
-    // Resume animation after user stops clicking (debounce)
-    // Clear previous timeout and set new one - resumes when user stops clicking
-    pauseTimeoutRef.current = setTimeout(() => {
-      resumeAnimation();
-    }, 500); // Resume 500ms after last button click
-  }, [getCurrentAnimationPosition, resumeAnimation]);
+  }, [getCurrentAnimationPosition, getItemWidth]);
 
   const handleScrollNext = useCallback(() => {
     if (!marqueeRef.current) return;
     const container = marqueeRef.current;
     
-    // Clear any existing timeout
-    if (pauseTimeoutRef.current) {
-      clearTimeout(pauseTimeoutRef.current);
-    }
-    
-    // Get current position before stopping animation
+    // Get current position
     const currentPos = manualScrollRef.current 
       ? currentOffsetRef.current 
       : getCurrentAnimationPosition();
     
-    // Stop animation and enable manual scrolling
+    // Enable manual scrolling
     manualScrollRef.current = true;
     container.style.animation = 'none';
     container.style.animationDelay = '0s';
-    
-    // Calculate item width based on screen size
-    const getItemWidth = () => {
-      if (typeof window === 'undefined') return 200;
-      if (window.innerWidth < 640) return 200 + 8; // width + gap
-      if (window.innerWidth < 768) return 280 + 12;
-      if (window.innerWidth < 1024) return 320 + 12;
-      if (window.innerWidth < 1280) return 380 + 16;
-      if (window.innerWidth < 1536) return 420 + 16;
-      return 450 + 16;
-    };
     
     const itemWidth = getItemWidth();
     currentOffsetRef.current = currentPos - itemWidth;
     
     // Apply manual scroll
+    setTransformX(currentOffsetRef.current);
     container.style.transform = `translateX(${currentOffsetRef.current}px)`;
     container.style.transition = 'transform 0.4s ease-out';
-    
-    // Resume animation after user stops clicking (debounce)
-    // Clear previous timeout and set new one - resumes when user stops clicking
-    pauseTimeoutRef.current = setTimeout(() => {
-      resumeAnimation();
-    }, 500); // Resume 500ms after last button click
-  }, [getCurrentAnimationPosition, resumeAnimation]);
+  }, [getCurrentAnimationPosition, getItemWidth]);
 
   return (
     <div className="mt-6 sm:mt-8 md:mt-10">
@@ -413,16 +285,14 @@ export function DJGalleryCarousel({
       </div>
       <div 
         className="w-full -mx-4 sm:mx-0 overflow-hidden"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
       >
         <div className="relative">
-          {/* Marquee container with seamless infinite scroll */}
+          {/* Manual navigation carousel - no auto-scroll */}
           <div 
             ref={marqueeRef}
             className="flex gap-2 sm:gap-3 md:gap-4 will-change-transform cursor-grab active:cursor-grabbing select-none"
             style={{
-              animation: `marquee ${animationDuration}s linear infinite`,
+              transform: `translateX(${transformX}px)`,
             }}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}

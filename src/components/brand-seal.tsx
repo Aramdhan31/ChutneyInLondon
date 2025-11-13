@@ -1,14 +1,19 @@
 import Image from "next/image";
 
+import { siteConfig } from "@/config/site";
+import { FlagStrip } from "@/components/flag-strip";
 import { cn } from "@/lib/utils";
 
 type BrandSealProps = {
   className?: string;
+  flags?: string[];
 };
 
 const LOGO_PATH = "/355866353_1436703107143090_803681614561195118_n.jpg";
 
-export function BrandSeal({ className }: BrandSealProps) {
+export function BrandSeal({ className, flags }: BrandSealProps) {
+  const displayFlags = flags || siteConfig.accentFlags;
+
   return (
     <div
       className={cn(
@@ -29,6 +34,14 @@ export function BrandSeal({ className }: BrandSealProps) {
             className="object-contain p-4 sm:p-6 lg:p-8"
           />
           <div className="pointer-events-none absolute inset-0 rounded-[1.55rem] bg-[radial-gradient(circle,transparent_34%,rgba(243,193,68,0.26))] sm:rounded-[2.4rem]" />
+        </div>
+        <div className="mt-5 sm:mt-6">
+          <FlagStrip
+            flags={displayFlags}
+            className="justify-center"
+            size={30}
+            columns={4}
+          />
         </div>
       </div>
     </div>
